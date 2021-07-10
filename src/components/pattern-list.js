@@ -46,22 +46,25 @@ function PatternList() {
   });
   return (
     <>
-      <div>
-        {mergedPages.map((item) => (
-          <Thumbnail item={item} key={item.designName} />
-        ))}
+      <div className="p-2 sm:p-10 bg-gray-200 flex flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center">
+          {mergedPages.map((item) => (
+            <Thumbnail item={item} key={item.designName} />
+          ))}
+        </div>
+
+        <button
+          ref={loadMoreButtonRef}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? "Loading more..."
+            : hasNextPage
+            ? "Load Newer"
+            : "Nothing more to load"}
+        </button>
       </div>
-      <button
-        ref={loadMoreButtonRef}
-        onClick={() => fetchNextPage()}
-        disabled={!hasNextPage || isFetchingNextPage}
-      >
-        {isFetchingNextPage
-          ? "Loading more..."
-          : hasNextPage
-          ? "Load Newer"
-          : "Nothing more to load"}
-      </button>
     </>
   );
 }
