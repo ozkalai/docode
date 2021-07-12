@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Thumbnail from "./thumbnail";
 import { useInfiniteQuery } from "react-query";
 import { getItems } from "../services/get-items";
@@ -19,7 +19,11 @@ function PatternList() {
       return await getItems(pageParam);
     },
     {
-      getNextPageParam: (lastPage, pages) => lastPage.config.url.slice(-1) + 1,
+      getNextPageParam: (lastPage, pages) => {
+        let currentUrl = lastPage.config.url.replace(/[^0-9]/g, "");
+        let newUrl = parseInt(currentUrl) + 1;
+        return newUrl;
+      },
     }
   );
 
